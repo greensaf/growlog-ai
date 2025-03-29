@@ -1,0 +1,19 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model GrowLog {
+  id         String   @id @default(cuid())
+  createdAt  DateTime @default(now())
+  plantId    String
+  data       Json
+  transcript String
+  photos     Json
+}

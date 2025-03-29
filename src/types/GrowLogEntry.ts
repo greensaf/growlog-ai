@@ -1,0 +1,25 @@
+export type GrowLogEntry = {
+  date: string;
+  time: string;
+  location?: string;
+  regime?: string;
+  plantId: string;
+  strain?: string;
+  start?: string;
+  startForm?: 'clone' | 'seed' | 'other';
+  sourceId?: string;
+  tOutside?: number;
+  tAir?: number;
+  tSolution?: number;
+  tSubstrate?: number;
+  hInside?: number;
+  hOutside?: number;
+  CO2?: number;
+  VPD?: number;
+  PPFD?: number;
+  EC?: number;
+  PH?: number;
+  Irrigation?: number;
+  Event?: string;
+  Comment?: string;
+};
