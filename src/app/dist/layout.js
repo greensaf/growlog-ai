@@ -3,6 +3,7 @@ exports.__esModule = true;
 exports.metadata = void 0;
 require("./globals.css");
 var google_1 = require("next/font/google");
+var ThemeToggle_1 = require("@/components/ThemeToggle");
 var inter = google_1.Inter({ subsets: ['latin'] });
 exports.metadata = {
     title: 'Growlog.ai',
@@ -18,6 +19,7 @@ function RootLayout(_a) {
                     React.createElement("a", { href: '/' }, "\uD83D\uDCCA \u0414\u0430\u043D\u043D\u044B\u0435"),
                     React.createElement("a", { href: '/advice' }, "\uD83E\uDDE0 \u0421\u043E\u0432\u0435\u0442\u044B"),
                     React.createElement("a", { href: '/gallery' }, "\uD83D\uDCF7 \u0424\u043E\u0442\u043E"),
-                    React.createElement("a", { href: '/settings' }, "\u2699\uFE0F \u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438"))))));
+                    React.createElement("a", { href: '/settings' }, "\u2699\uFE0F \u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438"),
+                    React.createElement(ThemeToggle_1["default"], null))))));
 }
 exports["default"] = RootLayout;

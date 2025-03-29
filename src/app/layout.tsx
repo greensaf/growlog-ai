@@ -1,5 +1,7 @@
 import './globals.css';
 import { Inter } from 'next/font/google';
+import ThemeToggle from '@/components/ThemeToggle';
+
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -23,6 +25,7 @@ export default function RootLayout({
             <a href='/advice'>🧠 Советы</a>
             <a href='/gallery'>📷 Фото</a>
             <a href='/settings'>⚙️ Настройки</a>
+            <ThemeToggle />
           </nav>
         </div>
       </body>
