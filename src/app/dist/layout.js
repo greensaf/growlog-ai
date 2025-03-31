@@ -7,13 +7,16 @@ var ThemeToggle_1 = require("@/components/ThemeToggle");
 var inter = google_1.Inter({ subsets: ['latin'] });
 exports.metadata = {
     title: 'Growlog.ai',
-    description: 'Журнал гровера с нейронкой'
+    description: 'Журнал гровера с нейронкой',
+    icons: {
+        icon: '/favicon.ico'
+    }
 };
 function RootLayout(_a) {
     var children = _a.children;
-    return (React.createElement("html", { lang: 'en' },
-        React.createElement("body", { className: inter.className },
-            React.createElement("div", { className: 'w-[390px] h-[844px] mx-auto border rounded-md shadow bg-white flex flex-col justify-between p-4' },
+    return (React.createElement("html", { lang: 'en', suppressHydrationWarning: true },
+        React.createElement("body", { className: inter.className + " bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100" },
+            React.createElement("div", { className: 'w-[390px] h-[844px] mx-auto border rounded-md shadow flex flex-col justify-between p-4 transition-colors' },
                 React.createElement("div", { className: 'flex-1 overflow-auto' }, children),
                 React.createElement("nav", { className: 'border-t mt-4 pt-2 flex justify-around text-xs text-muted-foreground' },
                     React.createElement("a", { href: '/' }, "\uD83D\uDCCA \u0414\u0430\u043D\u043D\u044B\u0435"),
