@@ -14,7 +14,6 @@
     "react-dom": "^18.2.0",
     "@auth0/nextjs-auth0": "^2.4.0",
     "@uploadthing/react": "^5.2.1",
-    "@uploadthing/react/hooks": "^5.2.1",
     "@supabase/supabase-js": "^2.38.0",
     "lucide-react": "^0.268.0",
     "recorder-js": "^1.0.3",
