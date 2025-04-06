@@ -4,7 +4,6 @@ import {
   handleCallback,
 } from '@auth0/nextjs-auth0/edge';
 
-
 export const GET = async (req: Request) => {
   const { pathname } = new URL(req.url);
 
