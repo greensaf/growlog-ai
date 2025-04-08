@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@auth0/nextjs-auth0": "^2.7.0",
+    "@auth0/nextjs-auth0": "^4.4.1",
     "@supabase/supabase-js": "^2.38.0",
     "@uploadthing/react": "^5.2.1",
     "formidable": "^3.5.0",
