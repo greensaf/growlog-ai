@@ -1,5 +1,6 @@
-// pages/index.tsx
 import { withPageAuthRequired } from '@auth0/nextjs-auth0';
+import GrowlogApp from '../GrowlogApp.tsx';
+
 
 function Home({ user }: any) {
   return (
@@ -14,6 +15,7 @@ function Home({ user }: any) {
       >
         Выйти
       </a>
+      <GrowlogApp />
     </div>
   );
 }
