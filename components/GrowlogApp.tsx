@@ -221,11 +221,13 @@ export default function GrowlogApp() {
       </div>
 
       <div className='flex justify-between items-center mt-3'>
-        <UploadDropzone
+        <UploadDropzone<OurFileRouter>
           endpoint='imageUploader'
           onClientUploadComplete={(res) => {
             if (res && res[0]?.url) {
-              setCollectedData((prev) => ({ ...prev, imageUrl: res[0].url }));
+    setCollectedData((prev) =>
+    prev ? { ...prev, imageUrl: res[0].url } : { imageUrl: res[0].url }
+      );
             }
           }}
           onUploadError={(error: Error) => {

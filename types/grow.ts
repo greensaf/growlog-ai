@@ -4,7 +4,7 @@ export interface GrowData {
   location?: string;
   regime?: string;
   plantId?: string;
-  cycleId: string;
+  cycleId?: string;
   cycleName?: string;
   strain?: string;
   start?: string;
