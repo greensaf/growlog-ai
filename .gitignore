@@ -2,6 +2,8 @@
 
 # my files
 dist
+/public/sw.js
+
 
 # dependencies
 /node_modules
