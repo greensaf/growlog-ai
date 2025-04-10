@@ -21,6 +21,8 @@ import Recorder from 'recorder-js';
 import type { GrowData } from '@/types/grow';
 import { createClient } from '@supabase/supabase-js';
 import { v4 as uuidv4 } from 'uuid';
+import { useTheme } from '@/lib/useTheme';
+
 
 const isIOS =
   typeof window !== 'undefined' && /iPhone|iPad|iPod/.test(navigator.userAgent);
@@ -30,7 +32,6 @@ const { useUploadThing } = generateReactHelpers<OurFileRouter>();
 export default function GrowlogApp() {
   const { user, isLoading } = useUser();
   const [recording, setRecording] = useState(false);
-  const [flashlight, setFlashlight] = useState(false);
   const [collectedData, setCollectedData] = useState<GrowData | null>(null);
   const [aiAnalysis, setAiAnalysis] = useState<string | null>(null);
   const [popoverOpen, setPopoverOpen] = useState(false);
@@ -39,6 +40,8 @@ export default function GrowlogApp() {
   const recorderJsRef = useRef<any>(null);
   const audioChunksRef = useRef<Blob[]>([]);
   const streamRef = useRef<MediaStream | null>(null);
+  const { theme, toggleTheme } = useTheme();
+
 
   const sessionId = uuidv4();
   const cycleId = 'grow-' + (user?.email?.split('@')[0] || 'default');
@@ -165,19 +168,16 @@ export default function GrowlogApp() {
     setRecording((prev) => !prev);
   };
 
-  const handleFlashlightToggle = (checked: boolean) => {
-    setFlashlight(checked);
-  };
 
   if (isLoading) return <div className='text-center mt-10'>Загрузка...</div>;
   if (!user) return null;
 
   return (
     <div
-      className={`max-w-[375px] h-[812px] mx-auto flex flex-col justify-between p-2 relative transition-colors ${
-        flashlight ? 'bg-green-500' : 'bg-white'
-      }`}
+      className={`max-w-[375px] h-[812px] mx-auto flex flex-col justify-between p-2 relative`}
     >
+      <Switch checked={theme === 'dark'} onCheckedChange={toggleTheme} />
+
       <div className='absolute top-2 right-2'>
         <Button
           variant='ghost'
@@ -249,8 +249,6 @@ export default function GrowlogApp() {
         >
           {recording || inputText ? 'AI' : 'REC'}
         </Button>
-
-        <Switch checked={flashlight} onCheckedChange={handleFlashlightToggle} />
       </div>
     </div>
   );
