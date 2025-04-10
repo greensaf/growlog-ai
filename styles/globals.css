@@ -2,11 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Дополнительные глобальные стили можно добавить ниже */
+/* Styles */
+
 
 html,
 body {
-    @apply bg-white text-black antialiased;
+  @apply bg-background text-foreground;
+  @apply antialiased transition-colors duration-500 ease-in-out;
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 button {
