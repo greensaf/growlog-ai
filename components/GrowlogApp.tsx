@@ -13,7 +13,7 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 import { Switch } from '@/components/ui/switch';
-import { Menu, LogOut, LogIn } from 'lucide-react';
+import { Menu, LogOut } from 'lucide-react';
 import { UploadDropzone } from '@uploadthing/react';
 import { generateReactHelpers } from '@uploadthing/react/hooks';
 import type { OurFileRouter } from '@/lib/uploadthing';
@@ -22,7 +22,6 @@ import type { GrowData } from '@/types/grow';
 import { createClient } from '@supabase/supabase-js';
 import { v4 as uuidv4 } from 'uuid';
 import { useTheme } from '@/lib/useTheme';
-
 
 const isIOS =
   typeof window !== 'undefined' && /iPhone|iPad|iPod/.test(navigator.userAgent);
@@ -41,7 +40,6 @@ export default function GrowlogApp() {
   const audioChunksRef = useRef<Blob[]>([]);
   const streamRef = useRef<MediaStream | null>(null);
   const { theme, toggleTheme } = useTheme();
-
 
   const sessionId = uuidv4();
   const cycleId = 'grow-' + (user?.email?.split('@')[0] || 'default');
@@ -168,14 +166,11 @@ export default function GrowlogApp() {
     setRecording((prev) => !prev);
   };
 
-
   if (isLoading) return <div className='text-center mt-10'>Загрузка...</div>;
   if (!user) return null;
 
   return (
-    <div
-      className={`max-w-[375px] h-[812px] mx-auto flex flex-col justify-between p-2 relative`}
-    >
+    <div className='max-w-[375px] h-[812px] mx-auto bg-background text-foreground flex flex-col justify-between p-2 relative transition-colors duration-700 ease-in-out rounded-xl shadow-xl border border-border'>
       <div className='absolute top-2 right-2'>
         <Button
           variant='ghost'
@@ -189,11 +184,11 @@ export default function GrowlogApp() {
 
       <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
         <PopoverTrigger>
-          <div className='w-16 h-16 bg-blue-200 rounded-full mx-auto mb-1 shadow flex items-center justify-center text-lg font-bold'>
+          <div className='w-16 h-16 bg-secondary rounded-full mx-auto mb-1 shadow flex items-center justify-center text-lg font-bold'>
             📋
           </div>
         </PopoverTrigger>
-        <PopoverContent className='max-h-80 overflow-auto'>
+        <PopoverContent className='max-h-80 overflow-auto bg-background border border-border transition-colors duration-700 ease-in-out'>
           <pre className='text-xs whitespace-pre-wrap'>
             {collectedData
               ? JSON.stringify(collectedData, null, 2)
@@ -203,7 +198,7 @@ export default function GrowlogApp() {
       </Popover>
 
       {aiAnalysis && (
-        <Alert className='mb-2'>
+        <Alert className='mb-2 border border-border transition-colors duration-700 ease-in-out'>
           <AlertTitle>Grow Tip of the Day</AlertTitle>
           <AlertDescription>{aiAnalysis}</AlertDescription>
         </Alert>
@@ -214,7 +209,7 @@ export default function GrowlogApp() {
           value={inputText}
           onChange={(e) => setInputText(e.target.value)}
           placeholder='Optional text input...'
-          className='text-sm flex-1'
+          className='text-sm flex-1 border border-border transition-colors duration-700 ease-in-out'
         />
         <Button variant='outline' size='icon'>
           <Menu size={18} />
@@ -241,14 +236,15 @@ export default function GrowlogApp() {
 
         <Button
           onClick={toggleRecording}
-          className={`w-20 h-20 rounded-full text-white font-bold ${
+          className={`w-20 h-20 rounded-full text-white font-bold transition-all duration-500 ${
             recording || inputText ? 'bg-orange-500' : 'bg-red-600'
           }`}
         >
           {recording || inputText ? 'AI' : 'REC'}
         </Button>
+
+        <Switch checked={theme === 'dark'} onCheckedChange={toggleTheme} />
       </div>
-      <Switch checked={theme === 'dark'} onCheckedChange={toggleTheme} />
     </div>
   );
 }
