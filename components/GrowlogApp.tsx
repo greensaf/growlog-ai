@@ -167,14 +167,17 @@ export default function GrowlogApp() {
 
   const handleFlashlightToggle = (checked: boolean) => {
     setFlashlight(checked);
-    document.body.style.backgroundColor = checked ? '#00FF00' : '';
   };
 
   if (isLoading) return <div className='text-center mt-10'>Загрузка...</div>;
   if (!user) return null;
 
   return (
-    <div className='max-w-[375px] h-[812px] mx-auto bg-white flex flex-col justify-between p-2 relative'>
+    <div
+      className={`max-w-[375px] h-[812px] mx-auto flex flex-col justify-between p-2 relative transition-colors ${
+        flashlight ? 'bg-green-500' : 'bg-white'
+      }`}
+    >
       <div className='absolute top-2 right-2'>
         <Button
           variant='ghost'
@@ -225,9 +228,11 @@ export default function GrowlogApp() {
           endpoint='imageUploader'
           onClientUploadComplete={(res) => {
             if (res && res[0]?.url) {
-    setCollectedData((prev) =>
-    prev ? { ...prev, imageUrl: res[0].url } : { imageUrl: res[0].url }
-      );
+              setCollectedData((prev) =>
+                prev
+                  ? { ...prev, imageUrl: res[0].url }
+                  : { imageUrl: res[0].url }
+              );
             }
           }}
           onUploadError={(error: Error) => {
