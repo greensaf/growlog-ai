@@ -176,8 +176,6 @@ export default function GrowlogApp() {
     <div
       className={`max-w-[375px] h-[812px] mx-auto flex flex-col justify-between p-2 relative`}
     >
-      <Switch checked={theme === 'dark'} onCheckedChange={toggleTheme} />
-
       <div className='absolute top-2 right-2'>
         <Button
           variant='ghost'
@@ -250,6 +248,7 @@ export default function GrowlogApp() {
           {recording || inputText ? 'AI' : 'REC'}
         </Button>
       </div>
+      <Switch checked={theme === 'dark'} onCheckedChange={toggleTheme} />
     </div>
   );
 }

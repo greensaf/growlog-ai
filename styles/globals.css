@@ -13,7 +13,10 @@ button {
     @apply focus:outline-none;
 }
 
-
+html.dark {
+  background-color: #000;
+  color: #fff;
+}
 
 @layer base {
   :root {
