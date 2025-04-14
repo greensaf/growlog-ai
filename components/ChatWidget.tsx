@@ -31,6 +31,7 @@ export function ChatWidget() {
     { from: "user", text: "I can't log in." },
   ]);
   const [input, setInput] = useState("");
+  const [isRecording, setIsRecording] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -90,10 +91,19 @@ export function ChatWidget() {
           placeholder="Press the button and speak..."
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          className="flex-1"
+          className="flex-[0.75]"
         />
-        <Button type="submit" size="sm" className="px-3 font-bold text-red-600 border border-red-600 hover:bg-red-50">
-          REC
+        <Button
+          type="button"
+          size="sm"
+          onClick={() => setIsRecording(!isRecording)}
+          className={`text-white font-semibold px-4 py-2 rounded-md transition-all ${
+            isRecording
+              ? "bg-red-600 animate-pulse"
+              : "bg-gray-800 hover:bg-gray-700"
+          }`}
+        >
+          {isRecording ? ".." : "REC"}
         </Button>
       </form>
     </Card>
