@@ -100,14 +100,21 @@ export function ChatWidget() {
             onClick={() => setIsRecording(!isRecording)}
             className={`font-semibold px-4 py-2 rounded-md transition-all ${
               isRecording
-                ? "bg-[#536C4A] text-white animate-pulse"
+                ? "bg-[#536C4A] text-white animate-pulse shadow-[0_0_10px_#536C4A]"
                 : "bg-black text-red-600 hover:bg-gray-900"
             }`}
           >
-            {isRecording ? "AI" : "REC"}
+            {isRecording ? (
+              <span className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
+                AI
+              </span>
+            ) : (
+              "REC"
+            )}
           </Button>
           {isRecording && (
-            <div className="flex items-end gap-[2px] h-5 ml-2">
+            <div className="flex items-end gap-[2px] h-5 ml-2" style={{ animation: 'fadeIn 0.3s ease-in-out' }}>
               <div className="w-[2px] h-3 bg-[#536C4A] animate-[ping_0.8s_ease-in-out_infinite]"></div>
               <div className="w-[2px] h-5 bg-[#536C4A] animate-[ping_1.1s_ease-in-out_infinite]"></div>
               <div className="w-[2px] h-4 bg-[#536C4A] animate-[ping_0.9s_ease-in-out_infinite]"></div>
