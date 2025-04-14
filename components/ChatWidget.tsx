@@ -10,6 +10,21 @@ import { useState, useRef, useEffect } from "react";
 
 export function ChatWidget() {
   const [messages, setMessages] = useState([
+    { from: "agent", text: `🌿 Today's Grow Data:
+
+• Strain: OG Kush
+• Plant ID: A1
+• Air Temp: 26°C
+• Substrate Temp: 22°C
+• Humidity: 55%
+• EC: 1.8
+• pH: 6.2
+• CO₂: 800 ppm
+• VPD: 1.1 kPa
+• PPFD: 550 µmol/m²/s
+• Irrigation: 3x/day
+
+🧪 Notes: Slight yellowing observed on lower leaves.` },
     { from: "agent", text: "Hi, how can I help you today?" },
     { from: "user", text: "Hey, I'm having trouble with my account." },
     { from: "agent", text: "What seems to be the problem?" },
@@ -52,14 +67,14 @@ export function ChatWidget() {
 
       <ScrollArea
         ref={scrollRef}
-        className="h-[300px] px-4 py-4 flex flex-col gap-4 flex-1 overflow-y-auto"
+        className="h-[300px] px-4 py-4 flex flex-col gap-6 flex-1 overflow-y-auto"
       >
         {messages.map((msg, index) => (
           <div
             key={index}
             className={`px-4 py-2 rounded-lg text-sm leading-snug break-words ${
               msg.from === "user"
-                ? "bg-primary text-primary-foreground self-end"
+                ? "bg-primary text-primary-foreground ml-auto"
                 : "bg-muted text-muted-foreground self-start"
             } max-w-[80%]`}
           >
