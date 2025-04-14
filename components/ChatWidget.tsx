@@ -57,7 +57,7 @@ export function ChatWidget() {
           <AvatarFallback>SD</AvatarFallback>
         </Avatar>
         <div className="flex flex-col">
-          <span className="font-medium">Gaia, OG Lab</span>
+          <span className="font-medium">Gaia Mastergro</span>
           <span className="text-sm text-muted-foreground">growlog.ai</span>
         </div>
         <Button variant="ghost" size="icon" className="ml-auto">
@@ -87,13 +87,13 @@ export function ChatWidget() {
 
       <form onSubmit={handleSend} className="flex items-center gap-2 p-3">
         <Input
-          placeholder="Type your message..."
+          placeholder="Press the button and speak..."
           value={input}
           onChange={(e) => setInput(e.target.value)}
           className="flex-1"
         />
-        <Button type="submit" size="icon">
-          <SendHorizontal size={16} />
+        <Button type="submit" size="sm" className="px-3 font-bold text-red-600 border border-red-600 hover:bg-red-50">
+          REC
         </Button>
       </form>
     </Card>
