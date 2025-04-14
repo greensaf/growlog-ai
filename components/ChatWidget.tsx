@@ -57,8 +57,8 @@ export function ChatWidget() {
           <AvatarFallback>SD</AvatarFallback>
         </Avatar>
         <div className="flex flex-col">
-          <span className="font-medium">Sofia Davis</span>
-          <span className="text-sm text-muted-foreground">m@example.com</span>
+          <span className="font-medium">Gaia, OG Lab</span>
+          <span className="text-sm text-muted-foreground">growlog.ai</span>
         </div>
         <Button variant="ghost" size="icon" className="ml-auto">
           <Plus size={18} />
