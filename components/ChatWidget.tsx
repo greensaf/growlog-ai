@@ -93,18 +93,29 @@ export function ChatWidget() {
           onChange={(e) => setInput(e.target.value)}
           className="flex-[0.75]"
         />
-        <Button
-          type="button"
-          size="sm"
-          onClick={() => setIsRecording(!isRecording)}
-          className={`text-white font-semibold px-4 py-2 rounded-md transition-all ${
-            isRecording
-              ? "bg-red-600 animate-pulse"
-              : "bg-gray-800 hover:bg-gray-700"
-          }`}
-        >
-          {isRecording ? ".." : "REC"}
-        </Button>
+        <div className="flex items-center">
+          <Button
+            type="button"
+            size="sm"
+            onClick={() => setIsRecording(!isRecording)}
+            className={`font-semibold px-4 py-2 rounded-md transition-all ${
+              isRecording
+                ? "bg-[#536C4A] text-white animate-pulse"
+                : "bg-black text-red-600 hover:bg-gray-900"
+            }`}
+          >
+            {isRecording ? "AI" : "REC"}
+          </Button>
+          {isRecording && (
+            <div className="flex items-end gap-[2px] h-5 ml-2">
+              <div className="w-[2px] h-3 bg-[#536C4A] animate-[ping_0.8s_ease-in-out_infinite]"></div>
+              <div className="w-[2px] h-5 bg-[#536C4A] animate-[ping_1.1s_ease-in-out_infinite]"></div>
+              <div className="w-[2px] h-4 bg-[#536C4A] animate-[ping_0.9s_ease-in-out_infinite]"></div>
+              <div className="w-[2px] h-2 bg-[#536C4A] animate-[ping_1.2s_ease-in-out_infinite]"></div>
+              <div className="w-[2px] h-3 bg-[#536C4A] animate-[ping_1s_ease-in-out_infinite]"></div>
+            </div>
+          )}
+        </div>
       </form>
     </Card>
   );
