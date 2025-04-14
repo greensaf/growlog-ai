@@ -52,23 +52,23 @@ export function ChatWidget() {
 
       <ScrollArea
         ref={scrollRef}
-        className="h-[300px] px-4 py-4 space-y-4 flex-1 overflow-y-auto"
+        className="h-[300px] px-4 py-4 flex flex-col gap-4 flex-1 overflow-y-auto"
       >
         {messages.map((msg, index) => (
           <div
             key={index}
-            className={`px-4 py-2 rounded-lg w-max max-w-[80%] ${
+            className={`px-4 py-2 rounded-lg text-sm leading-snug break-words ${
               msg.from === "user"
-                ? "bg-primary text-primary-foreground ml-auto"
-                : "bg-muted text-muted-foreground"
-            }`}
+                ? "bg-primary text-primary-foreground self-end"
+                : "bg-muted text-muted-foreground self-start"
+            } max-w-[80%]`}
           >
             {msg.text}
           </div>
         ))}
       </ScrollArea>
 
-      <form onSubmit={handleSend} className="flex items-center gap-2 p-3 border-t">
+      <form onSubmit={handleSend} className="flex items-center gap-2 p-3">
         <Input
           placeholder="Type your message..."
           value={input}
