@@ -4,10 +4,9 @@ import { Card } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Plus, SendHorizontal } from "lucide-react";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 export function ChatWidget() {
   const [messages, setMessages] = useState([
@@ -17,6 +16,15 @@ export function ChatWidget() {
     { from: "user", text: "I can't log in." },
   ]);
   const [input, setInput] = useState("");
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const container = scrollRef.current;
+    if (container) {
+      container.scrollTop = container.scrollHeight;
+      container.style.scrollBehavior = 'smooth';
+    }
+  }, [messages]);
 
   function handleSend(e: React.FormEvent) {
     e.preventDefault();
@@ -42,13 +50,14 @@ export function ChatWidget() {
         </Button>
       </div>
 
-      <Separator />
-
-      <ScrollArea className="h-[300px] px-4 py-2 space-y-2 flex-1">
+      <ScrollArea
+        ref={scrollRef}
+        className="h-[300px] px-4 py-4 space-y-4 flex-1 overflow-y-auto"
+      >
         {messages.map((msg, index) => (
           <div
             key={index}
-            className={`p-2 rounded-md w-max max-w-[80%] ${
+            className={`px-4 py-2 rounded-lg w-max max-w-[80%] ${
               msg.from === "user"
                 ? "bg-primary text-primary-foreground ml-auto"
                 : "bg-muted text-muted-foreground"
