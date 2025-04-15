@@ -29,15 +29,6 @@ export function VoiceButton({ isRecording, onClick }: VoiceButtonProps) {
           "REC"
         )}
       </Button>
-      {isRecording && (
-        <div className="flex items-end gap-[2px] h-5 ml-2" style={{ animation: 'fadeIn 0.3s ease-in-out' }}>
-          <div className="w-[2px] h-3 bg-[#536C4A] animate-[ping_0.8s_ease-in-out_infinite]" />
-          <div className="w-[2px] h-5 bg-[#536C4A] animate-[ping_1.1s_ease-in-out_infinite]" />
-          <div className="w-[2px] h-4 bg-[#536C4A] animate-[ping_0.9s_ease-in-out_infinite]" />
-          <div className="w-[2px] h-2 bg-[#536C4A] animate-[ping_1.2s_ease-in-out_infinite]" />
-          <div className="w-[2px] h-3 bg-[#536C4A] animate-[ping_1s_ease-in-out_infinite]" />
-        </div>
-      )}
     </div>
   );
 }
