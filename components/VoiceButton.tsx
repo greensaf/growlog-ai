@@ -18,15 +18,15 @@ export function VoiceButton({ isRecording, onClick }: VoiceButtonProps) {
     >
       {/* Кружок — мигает при записи */}
       <span
-        className={`w-2 h-2 rounded-full transition-all duration-300 ${
-          isRecording ? 'bg-red-600 animate-ping' : 'bg-red-600'
-        }`}
-      />
+  className={`w-2 h-2 rounded-full transition-all duration-300 ${
+    isRecording ? 'bg-[#536C4A] animate-ping' : 'bg-red-600'
+  }`}
+/>
 
       {/* Надпись "REC" — пульсирует при записи */}
       <span
         className={`text-sm sm:text-base md:text-lg font-semibold transition-colors duration-300 ${
-          isRecording ? 'text-[#536C4A] animate-pulse' : 'text-red-600'
+          isRecording ? 'text-[#536C4A] animate-slowpulse' : 'text-red-600'
         }`}
       >
         REC
