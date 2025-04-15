@@ -25,8 +25,8 @@ export function VoiceButton({ isRecording, onClick }: VoiceButtonProps) {
 
       {/* Надпись "REC" — пульсирует при записи */}
       <span
-        className={`text-sm sm:text-base md:text-lg font-semibold ${
-          isRecording ? 'animate-pulse' : ''
+        className={`text-sm sm:text-base md:text-lg font-semibold transition-colors duration-300 ${
+          isRecording ? 'text-[#536C4A] animate-pulse' : 'text-red-600'
         }`}
       >
         REC
