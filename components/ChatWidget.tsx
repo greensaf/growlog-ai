@@ -61,12 +61,12 @@ export function ChatWidget() {
             <AvatarFallback>SD</AvatarFallback>
           </Avatar>
           <div className="flex flex-col">
-            <span className="font-medium">Gaia [Master-grower]</span>
-            <span className="text-sm text-muted-foreground">growlog.ai</span>
+            <span className="font-medium text-base sm:text-lg md:text-xl">Gaia [Master-grower]</span>
+            <span className="text-sm sm:text-base text-muted-foreground">growlog.ai</span>
           </div>
           <div className="ml-auto flex items-center gap-2">
-            <Button variant="ghost" size="icon">
-              <Plus size={18} />
+            <Button variant="ghost" size="icon" className="w-10 h-10">
+              <Plus size={22} />
             </Button>
             <ThemeToggle />
           </div>
