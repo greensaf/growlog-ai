@@ -54,7 +54,7 @@ export function ChatWidget() {
 
   return (
     <div className="w-screen min-h-[100dvh] bg-background text-foreground pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)] px-[env(safe-area-inset-left)] pr-[env(safe-area-inset-right)]">
-      <Card className="w-full h-full rounded-none border bg-background text-foreground flex flex-col overflow-hidden">
+      <Card className="w-full h-full rounded-none bg-background text-foreground flex flex-col overflow-hidden border-0 shadow-none">
         <div className="px-4 sm:px-6 md:px-8 lg:px-12 py-4 flex items-center gap-3">
           <Avatar>
             <AvatarImage src="/avatar.png" />

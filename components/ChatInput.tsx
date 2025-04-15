@@ -27,7 +27,9 @@ export function ChatInput({
         className="w-[75%] text-sm sm:text-base md:text-lg py-2"
       />
       <div className="flex justify-end w-[25%]">
-        <VoiceButton isRecording={isRecording} onClick={toggleRecording} />
+        <div className="w-full max-w-[72px]">
+          <VoiceButton isRecording={isRecording} onClick={toggleRecording} />
+        </div>
       </div>
     </form>
   );
