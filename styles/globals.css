@@ -17,8 +17,7 @@
 
 html,
 body {
-  @apply bg-background text-foreground;
-  @apply antialiased transition-colors duration-500 ease-in-out;
+  @apply bg-background text-foreground antialiased transition-colors duration-500 ease-in-out;
   height: 100%;
   margin: 0;
   padding: 0;
@@ -29,8 +28,7 @@ button {
 }
 
 html.dark {
-  background-color: #000;
-  color: #fff;
+  @apply bg-background text-foreground;
 }
 
 @layer base {

@@ -8,6 +8,7 @@ import { Plus } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { ChatInput } from "@/components/ChatInput";
 import { ChatMessage } from "@/components/ChatMessage";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 export function ChatWidget() {
   const [messages, setMessages] = useState([
@@ -52,39 +53,42 @@ export function ChatWidget() {
   }
 
   return (
-    <Card className="w-[350px] rounded-xl shadow-md flex flex-col overflow-hidden">
-      <div className="p-4 flex items-center gap-3">
-        <Avatar>
-          <AvatarImage src="/avatar.png" />
-          <AvatarFallback>SD</AvatarFallback>
-        </Avatar>
-        <div className="flex flex-col">
-          <span className="font-medium">Gaia Mastergro</span>
-          <span className="text-sm text-muted-foreground">growlog.ai</span>
+    <div className="w-screen h-screen bg-background text-foreground pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)] px-[env(safe-area-inset-left)] pr-[env(safe-area-inset-right)]">
+      <Card className="w-full h-full rounded-none shadow-none flex flex-col overflow-hidden">
+        <div className="px-4 sm:px-6 md:px-8 lg:px-12 py-4 flex items-center gap-3">
+          <Avatar>
+            <AvatarImage src="/avatar.png" />
+            <AvatarFallback>SD</AvatarFallback>
+          </Avatar>
+          <div className="flex flex-col">
+            <span className="font-medium">Gaia Mastergro</span>
+            <span className="text-sm text-muted-foreground">growlog.ai</span>
+          </div>
+          <ThemeToggle />
+          <Button variant="ghost" size="icon" className="ml-auto">
+            <Plus size={18} />
+          </Button>
         </div>
-        <Button variant="ghost" size="icon" className="ml-auto">
-          <Plus size={18} />
-        </Button>
-      </div>
 
-      <ScrollArea
-        ref={scrollRef}
-        className="h-[300px] px-4 py-4 flex-1 overflow-y-auto"
-      >
-        <div className="flex flex-col gap-6">
-          {messages.map((msg, index) => (
-            <ChatMessage key={index} from={msg.from as "user" | "agent"} text={msg.text} />
-          ))}
-        </div>
-      </ScrollArea>
+        <ScrollArea
+          ref={scrollRef}
+          className="h-[300px] px-4 sm:px-6 md:px-8 lg:px-12 py-4 sm:py-6 md:py-8 flex-1 overflow-y-auto"
+        >
+          <div className="flex flex-col gap-6">
+            {messages.map((msg, index) => (
+              <ChatMessage key={index} from={msg.from as "user" | "agent"} text={msg.text} />
+            ))}
+          </div>
+        </ScrollArea>
 
-      <ChatInput
-        input={input}
-        setInput={setInput}
-        isRecording={isRecording}
-        toggleRecording={() => setIsRecording(!isRecording)}
-        handleSend={handleSend}
-      />
-    </Card>
+        <ChatInput
+          input={input}
+          setInput={setInput}
+          isRecording={isRecording}
+          toggleRecording={() => setIsRecording(!isRecording)}
+          handleSend={handleSend}
+        />
+      </Card>
+    </div>
   );
 }
