@@ -19,7 +19,7 @@ export function ChatInput({
   handleSend,
 }: ChatInputProps) {
   return (
-    <form onSubmit={handleSend} className="flex items-center gap-2 px-4 sm:px-6 md:px-8 lg:px-12 py-3 w-full">
+    <form onSubmit={handleSend} className="flex items-center gap-2 px-4 sm:px-6 md:px-8 lg:px-12 py-3 w-full pb-[env(safe-area-inset-bottom)] bg-background">
       <Input
         placeholder="Press the button and speak..."
         value={input}

@@ -53,15 +53,15 @@ export function ChatWidget() {
   }
 
   return (
-    <div className="w-screen h-screen bg-background text-foreground pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)] px-[env(safe-area-inset-left)] pr-[env(safe-area-inset-right)]">
-      <Card className="w-full h-full rounded-xl border bg-background text-foreground flex flex-col overflow-hidden">
+    <div className="w-screen min-h-[100dvh] bg-background text-foreground pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)] px-[env(safe-area-inset-left)] pr-[env(safe-area-inset-right)]">
+      <Card className="w-full h-full rounded-none border bg-background text-foreground flex flex-col overflow-hidden">
         <div className="px-4 sm:px-6 md:px-8 lg:px-12 py-4 flex items-center gap-3">
           <Avatar>
             <AvatarImage src="/avatar.png" />
             <AvatarFallback>SD</AvatarFallback>
           </Avatar>
           <div className="flex flex-col">
-            <span className="font-medium">Gaia Mastergro</span>
+            <span className="font-medium">Gaia [Master-grower]</span>
             <span className="text-sm text-muted-foreground">growlog.ai</span>
           </div>
           <div className="ml-auto flex items-center gap-2">
