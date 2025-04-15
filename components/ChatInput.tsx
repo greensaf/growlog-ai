@@ -19,18 +19,16 @@ export function ChatInput({
   handleSend,
 }: ChatInputProps) {
   return (
-    <div className="w-screen h-screen bg-background text-foreground pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)] px-[env(safe-area-inset-left)] pr-[env(safe-area-inset-right)]">
-      <form onSubmit={handleSend} className="flex items-center gap-2 px-4 sm:px-6 md:px-8 lg:px-12 py-3 w-full">
-        <Input
-          placeholder="Press the button and speak..."
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          className="w-[75%]"
-        />
-        <div className="flex justify-end w-[25%]">
-          <VoiceButton isRecording={isRecording} onClick={toggleRecording} />
-        </div>
-      </form>
-    </div>
+    <form onSubmit={handleSend} className="flex items-center gap-2 px-4 sm:px-6 md:px-8 lg:px-12 py-3 w-full">
+      <Input
+        placeholder="Press the button and speak..."
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+        className="w-[75%]"
+      />
+      <div className="flex justify-end w-[25%]">
+        <VoiceButton isRecording={isRecording} onClick={toggleRecording} />
+      </div>
+    </form>
   );
 }
