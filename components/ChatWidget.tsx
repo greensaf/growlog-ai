@@ -58,11 +58,11 @@ export function ChatWidget() {
         <div className="px-4 sm:px-6 md:px-8 lg:px-12 py-4 flex items-center gap-3">
           <Avatar>
             <AvatarImage src="/avatar.png" />
-            <AvatarFallback>SD</AvatarFallback>
+            <AvatarFallback>AI</AvatarFallback>
           </Avatar>
           <div className="flex flex-col">
-            <span className="font-medium text-base sm:text-lg md:text-xl">Gaia [Master-grower]</span>
-            <span className="text-sm sm:text-base text-muted-foreground">growlog.ai</span>
+            <span className="font-medium text-base sm:text-lg md:text-xl">Gaia Model1</span>
+            <span className="text-sm sm:text-base text-muted-foreground">master-grower</span>
           </div>
           <div className="ml-auto flex items-center gap-2">
             <Button variant="ghost" size="icon" className="w-10 h-10">
