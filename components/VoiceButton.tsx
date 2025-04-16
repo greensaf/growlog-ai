@@ -26,7 +26,7 @@ export function VoiceButton({
       variant='ghost'
       size='icon'
       className={cn(
-        'relative flex items-center justify-center gap-2 h-12 w-12 rounded-md transition-all duration-300',
+        'relative flex items-center justify-center gap-2 h-14 w-14 rounded-md transition-all duration-300',
         backgroundColor,
         className
       )}
