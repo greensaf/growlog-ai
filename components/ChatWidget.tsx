@@ -61,7 +61,7 @@ export function ChatWidget() {
             <AvatarFallback>AI</AvatarFallback>
           </Avatar>
           <div className="flex flex-col">
-            <span className="font-medium text-base sm:text-lg md:text-xl">Gaia</span>
+            <span className="font-medium text-base sm:text-lg md:text-xl">Gaia v0.0.1</span>
             <span className="text-sm sm:text-base text-muted-foreground">master-grower</span>
           </div>
           <div className="ml-auto flex items-center gap-2">
