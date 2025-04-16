@@ -1,6 +1,7 @@
 'use client';
 
 import { VoiceButton } from '@/components/VoiceButton';
+import { useState, useRef, useEffect } from 'react';
 
 interface ChatInputProps {
   isRecording: boolean;
@@ -13,30 +14,50 @@ export function ChatInput({
   toggleRecording,
   handleSend,
 }: ChatInputProps) {
-  // Симуляция распознавания — замените позже на реальное использование Whisper
-  const simulateRecognition = async () => {
-    // В будущем — сюда подставится результат голосового ввода
-    const simulatedText = 'Simulated voice input';
-    handleSend(simulatedText);
+  const [text, setText] = useState('');
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  // Автоматическая подгонка высоты textarea
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = 'auto';
+      textareaRef.current.style.height =
+        textareaRef.current.scrollHeight + 'px';
+    }
+  }, [text]);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (text.trim()) {
+      handleSend(text);
+      setText('');
+    }
   };
 
   const handleClick = async () => {
     toggleRecording();
-
-    // Пока просто имитируем окончание записи через 2 секунды
     if (!isRecording) {
-      setTimeout(async () => {
-        toggleRecording(); // завершили запись
-        await simulateRecognition();
+      setTimeout(() => {
+        toggleRecording();
+        handleSend('Simulated voice input');
       }, 2000);
     }
   };
 
   return (
-    <div className='flex items-center justify-end px-4 sm:px-6 md:px-8 lg:px-12 py-3 w-full pb-[calc(env(safe-area-inset-bottom)+8px)] bg-background'>
-      <div className='w-full max-w-[72px]'>
-        <VoiceButton isRecording={isRecording} onClick={handleClick} />
-      </div>
-    </div>
+    <form
+      onSubmit={handleSubmit}
+      className='flex items-end gap-2 px-4 sm:px-6 md:px-8 lg:px-12 py-3 w-full bg-background pb-[calc(env(safe-area-inset-bottom)+8px)]'
+    >
+      <textarea
+        ref={textareaRef}
+        rows={1}
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        placeholder='Type your message...'
+        className='flex-1 resize-none rounded-md border bg-background text-foreground placeholder:text-muted-foreground px-4 py-3 max-h-40 overflow-auto focus:outline-none'
+      />
+      <VoiceButton isRecording={isRecording} onClick={handleClick} />
+    </form>
   );
 }
