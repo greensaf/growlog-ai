@@ -37,6 +37,11 @@ export function ChatInput({
 
   const handleMicClick = async () => {
     toggleRecording();
+
+    if ('vibrate' in navigator) {
+      navigator.vibrate([50, 30, 50]);
+    }
+
     if (!isRecording) {
       setTimeout(() => {
         toggleRecording();
@@ -48,7 +53,7 @@ export function ChatInput({
   return (
     <form
       onSubmit={handleSubmit}
-      className='flex items-end gap-2 px-4 sm:px-6 md:px-8 lg:px-12 py-3 w-full bg-background pb-[calc(env(safe-area-inset-bottom)+8px)]'
+      className='flex items-end gap-2 px-4 sm:px-6 md:px-8 lg:px-12 py-3 bg-background w-full'
     >
       <textarea
         ref={textareaRef}
@@ -56,23 +61,23 @@ export function ChatInput({
         value={text}
         onChange={(e) => setText(e.target.value)}
         placeholder='Type your message...'
-        className='flex-1 resize-none rounded-md border bg-background text-foreground placeholder:text-muted-foreground px-4 py-3 max-h-40 overflow-auto focus:outline-none text-base'
+        className='flex-1 resize-none rounded-md border bg-background text-foreground placeholder:text-muted-foreground px-4 py-3 max-h-40 overflow-auto focus:outline-none text-base h-12' // <= фиксированная начальная высота
       />
 
       {text.length === 0 ? (
         <VoiceButton
           isRecording={isRecording}
           onClick={handleMicClick}
-          className='w-12 h-10'
+          className='w-12 h-12'
         />
       ) : (
         <Button
           type='submit'
           size='icon'
-          className='w-12 h-10'
-          variant='default'
+          className='w-12 h-12 text-[#536C4A] border border-[#536C4A]'
+          variant='ghost'
         >
-          <SendHorizonal size={18} />
+          <SendHorizonal size={20} />
         </Button>
       )}
     </form>

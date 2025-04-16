@@ -64,7 +64,7 @@ export function ChatWidget() {
               Growlog v0.0.1
             </span>
             <span className='text-sm sm:text-base text-muted-foreground'>
-              grower's journal with neuro
+              journal with neuro
             </span>
           </div>
           <div className='ml-auto flex items-center gap-2'>
