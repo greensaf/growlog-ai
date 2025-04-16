@@ -1,18 +1,20 @@
 'use client';
 
-import { Card } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Plus } from "lucide-react";
-import { useState, useRef, useEffect } from "react";
-import { ChatInput } from "@/components/ChatInput";
-import { ChatMessage } from "@/components/ChatMessage";
-import { ThemeToggle } from "@/components/ThemeToggle";
+import { Card } from '@/components/ui/card';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Plus } from 'lucide-react';
+import { useState, useRef, useEffect } from 'react';
+import { ChatInput } from '@/components/ChatInput';
+import { ChatMessage } from '@/components/ChatMessage';
+import { ThemeToggle } from '@/components/ThemeToggle';
 
 export function ChatWidget() {
   const [messages, setMessages] = useState([
-    { from: "agent", text: `🌿 Today's Grow Data:
+    {
+      from: 'agent',
+      text: `🌿 Today's Grow Data:
 
 • Strain: OG Kush
 • Plant ID: A1
@@ -26,13 +28,13 @@ export function ChatWidget() {
 • PPFD: 550 µmol/m²/s
 • Irrigation: 3x/day
 
-🧪 Notes: Slight yellowing observed on lower leaves.` },
-    { from: "agent", text: "Hi, how can I help you today?" },
-    { from: "user", text: "Hey, I'm having trouble with my account." },
-    { from: "agent", text: "What seems to be the problem?" },
-    { from: "user", text: "I can't log in." },
+🧪 Notes: Slight yellowing observed on lower leaves.`,
+    },
+    { from: 'agent', text: 'Hi, how can I help you today?' },
+    { from: 'user', text: "Hey, I'm having trouble with my account." },
+    { from: 'agent', text: 'What seems to be the problem?' },
+    { from: 'user', text: "I can't log in." },
   ]);
-  const [input, setInput] = useState("");
   const [isRecording, setIsRecording] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -44,12 +46,9 @@ export function ChatWidget() {
     }
   }, [messages]);
 
-  function handleSend(e: React.FormEvent) {
-    e.preventDefault();
-    if (!input.trim()) return;
-
-    setMessages([...messages, { from: "user", text: input }]);
-    setInput("");
+  function handleSend(text: string) {
+    if (!text.trim()) return;
+    setMessages([...messages, { from: 'user', text }]);
   }
 
   return (
@@ -65,7 +64,7 @@ export function ChatWidget() {
               Growlog v0.0.1
             </span>
             <span className='text-sm sm:text-base text-muted-foreground'>
-              journal with neural network
+              log with neural network
             </span>
           </div>
           <div className='ml-auto flex items-center gap-2'>
@@ -93,8 +92,6 @@ export function ChatWidget() {
           </ScrollArea>
 
           <ChatInput
-            input={input}
-            setInput={setInput}
             isRecording={isRecording}
             toggleRecording={() => setIsRecording(!isRecording)}
             handleSend={handleSend}
