@@ -41,8 +41,10 @@ export function ChatWidget() {
   useEffect(() => {
     const container = scrollRef.current;
     if (container) {
-      container.scrollTop = container.scrollHeight;
-      container.style.scrollBehavior = 'smooth';
+      container.scrollTo({
+        top: container.scrollHeight,
+        behavior: 'smooth',
+      });
     }
   }, [messages]);
 
@@ -52,9 +54,10 @@ export function ChatWidget() {
   }
 
   return (
-    <div className='w-screen min-h-[100dvh] bg-background text-foreground pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)] px-[env(safe-area-inset-left)] pr-[env(safe-area-inset-right)]'>
-      <Card className='w-full h-full rounded-none bg-background text-foreground flex flex-col overflow-hidden border-0 shadow-none'>
-        <div className='px-4 sm:px-6 md:px-8 lg:px-12 py-4 flex items-center gap-3'>
+    <div className='w-screen h-screen bg-background text-foreground pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]'>
+      <Card className='w-full h-full flex flex-col overflow-hidden border-0 shadow-none rounded-none bg-background text-foreground'>
+        {/* Header */}
+        <div className='px-4 sm:px-6 md:px-8 lg:px-12 py-4 flex items-center gap-3 shrink-0'>
           <Avatar>
             <AvatarImage src='/avatar.png' />
             <AvatarFallback>.ai</AvatarFallback>
@@ -64,7 +67,7 @@ export function ChatWidget() {
               Growlog
             </span>
             <span className='text-sm sm:text-base text-muted-foreground'>
-              journal with neuro
+              grow journal with neuro
             </span>
           </div>
           <div className='ml-auto flex items-center gap-2'>
@@ -75,10 +78,11 @@ export function ChatWidget() {
           </div>
         </div>
 
-        <div className='flex flex-col flex-1 overflow-hidden'>
-          <ScrollArea
+        {/* Scrollable messages */}
+        <div className='flex-1 relative overflow-hidden'>
+          <div
             ref={scrollRef}
-            className='px-4 sm:px-6 md:px-8 lg:px-12 py-4 sm:py-6 md:py-8 flex-1 overflow-y-auto'
+            className='absolute inset-0 overflow-y-auto px-4 sm:px-6 md:px-8 lg:px-12 py-4 sm:py-6 md:py-8 pb-[104px]' // extra bottom padding for input
           >
             <div className='flex flex-col gap-6'>
               {messages.map((msg, index) => (
@@ -89,8 +93,11 @@ export function ChatWidget() {
                 />
               ))}
             </div>
-          </ScrollArea>
+          </div>
+        </div>
 
+        {/* Input fixed at bottom */}
+        <div className='shrink-0'>
           <ChatInput
             isRecording={isRecording}
             toggleRecording={() => setIsRecording(!isRecording)}
