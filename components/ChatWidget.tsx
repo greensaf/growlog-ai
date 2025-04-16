@@ -61,10 +61,10 @@ export function ChatWidget() {
           </Avatar>
           <div className='flex flex-col'>
             <span className='font-medium text-base sm:text-lg md:text-xl'>
-              Growlog v0.0.1
+              Growlog
             </span>
             <span className='text-sm sm:text-base text-muted-foreground'>
-              with neuro
+              journal with neuro
             </span>
           </div>
           <div className='ml-auto flex items-center gap-2'>
