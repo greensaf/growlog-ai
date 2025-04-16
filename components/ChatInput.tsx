@@ -68,13 +68,13 @@ export function ChatInput({
         <VoiceButton
           isRecording={isRecording}
           onClick={handleMicClick}
-          className='w-12 h-12'
+          className='w-14 h-12'
         />
       ) : (
         <Button
           type='submit'
           size='icon'
-          className='w-12 h-12 text-[#536C4A] border border-[#536C4A]'
+          className='w-14 h-12 text-[#536C4A] border border-[#536C4A]'
           variant='ghost'
         >
           <SendHorizonal size={20} />
