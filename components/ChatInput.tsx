@@ -1,7 +1,9 @@
 'use client';
 
-import { VoiceButton } from '@/components/VoiceButton';
 import { useState, useRef, useEffect } from 'react';
+import { VoiceButton } from '@/components/VoiceButton';
+import { SendHorizonal } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 interface ChatInputProps {
   isRecording: boolean;
@@ -17,7 +19,6 @@ export function ChatInput({
   const [text, setText] = useState('');
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  // Автоматическая подгонка высоты textarea
   useEffect(() => {
     if (textareaRef.current) {
       textareaRef.current.style.height = 'auto';
@@ -34,7 +35,7 @@ export function ChatInput({
     }
   };
 
-  const handleClick = async () => {
+  const handleMicClick = async () => {
     toggleRecording();
     if (!isRecording) {
       setTimeout(() => {
@@ -55,9 +56,25 @@ export function ChatInput({
         value={text}
         onChange={(e) => setText(e.target.value)}
         placeholder='Type your message...'
-        className='flex-1 resize-none rounded-md border bg-background text-foreground placeholder:text-muted-foreground px-4 py-3 max-h-40 overflow-auto focus:outline-none'
+        className='flex-1 resize-none rounded-md border bg-background text-foreground placeholder:text-muted-foreground px-4 py-3 max-h-40 overflow-auto focus:outline-none text-base'
       />
-      <VoiceButton isRecording={isRecording} onClick={handleClick} />
+
+      {text.length === 0 ? (
+        <VoiceButton
+          isRecording={isRecording}
+          onClick={handleMicClick}
+          className='w-12 h-10'
+        />
+      ) : (
+        <Button
+          type='submit'
+          size='icon'
+          className='w-12 h-10'
+          variant='default'
+        >
+          <SendHorizonal size={18} />
+        </Button>
+      )}
     </form>
   );
 }
