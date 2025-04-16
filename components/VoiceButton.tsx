@@ -15,9 +15,10 @@ export function VoiceButton({
   onClick,
   className,
 }: VoiceButtonProps) {
-  const { theme } = useTheme(); // определяем активную тему
+  const { resolvedTheme } = useTheme();
 
-  const baseTextColor = theme === 'dark' ? 'text-white' : 'text-black'; // по умолчанию: белый/чёрный
+  // Добавляем адаптивный фон
+  const backgroundColor = resolvedTheme === 'dark' ? 'bg-white' : 'bg-black';
 
   return (
     <Button
@@ -25,24 +26,24 @@ export function VoiceButton({
       variant='ghost'
       size='icon'
       className={cn(
-        'relative flex flex-col items-center justify-center rounded-md transition-all duration-300 p-0',
-        'w-12 h-12', // квадратная форма
+        'relative flex items-center justify-center gap-2 h-12 w-12 rounded-md transition-all duration-300',
+        backgroundColor,
         className
       )}
     >
-      {/* Кружок */}
+      {/* Кружочек слева */}
       <span
         className={cn(
-          'w-2 h-2 mb-1 rounded-full',
+          'w-2 h-2 rounded-full',
           isRecording ? 'bg-[#536C4A] animate-slowpulse' : 'bg-red-600'
         )}
       />
-      {/* Надпись */}
+
+      {/* Надпись справа */}
       <span
         className={cn(
-          'text-xs font-medium',
-          isRecording ? 'text-[#536C4A]' : baseTextColor,
-          !isRecording && 'transition-colors duration-300'
+          'text-sm font-medium',
+          isRecording ? 'text-[#536C4A]' : 'text-red-600'
         )}
       >
         REC
