@@ -57,7 +57,7 @@ export function ChatWidget() {
         <div className='px-4 sm:px-6 md:px-8 lg:px-12 py-4 flex items-center gap-3'>
           <Avatar>
             <AvatarImage src='/avatar.png' />
-            <AvatarFallback>AI</AvatarFallback>
+            <AvatarFallback>.ai</AvatarFallback>
           </Avatar>
           <div className='flex flex-col'>
             <span className='font-medium text-base sm:text-lg md:text-xl'>

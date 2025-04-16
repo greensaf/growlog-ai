@@ -3,6 +3,7 @@
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { useTheme } from 'next-themes';
+import { useRef, useEffect } from 'react';
 
 interface VoiceButtonProps {
   isRecording: boolean;
@@ -16,12 +17,20 @@ export function VoiceButton({
   className,
 }: VoiceButtonProps) {
   const { resolvedTheme } = useTheme();
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
-  // Добавляем адаптивный фон
+  // Автофокус на кнопке при монтировании
+  useEffect(() => {
+    if (buttonRef.current) {
+      buttonRef.current.focus();
+    }
+  }, []);
+
   const backgroundColor = resolvedTheme === 'dark' ? 'bg-white' : 'bg-black';
 
   return (
     <Button
+      ref={buttonRef}
       onClick={onClick}
       variant='ghost'
       size='icon'
@@ -39,7 +48,7 @@ export function VoiceButton({
         )}
       />
 
-      {/* Надпись справа */}
+      {/* Надпись */}
       <span
         className={cn(
           'text-sm font-medium',
