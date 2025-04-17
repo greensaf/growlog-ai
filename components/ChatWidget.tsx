@@ -79,7 +79,7 @@ export function ChatWidget() {
             </span>
           </div>
 
-          <div className='ml-auto flex items-center gap-1.5'>
+          <div className='ml-auto flex items-center gap-1'>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant='ghost' size='icon' className='w-10 h-10'>
@@ -88,7 +88,7 @@ export function ChatWidget() {
               </DropdownMenuTrigger>
               <DropdownMenuContent align='center' className='w-48'>
                 <DropdownMenuItem onClick={() => alert('Profile clicked')}>
-                ⚇ Profile
+                  ⚘ Profile
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => alert('Web3 clicked')}>
                   ⑆ Web3
