@@ -94,7 +94,7 @@ export function ChatWidget() {
                   ⑆ Web3
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => alert('Reports clicked')}>
-                  ⏍ Reports
+                  ⎘ Export
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => alert('Settings')}>
                   ⚙︎ Options
