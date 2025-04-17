@@ -100,7 +100,7 @@ export function ChatWidget() {
                   ⚙︎ Options
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => alert('Log out')}>
-                  ⎋ Log out
+                  ⍅ Log out
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
