@@ -1,4 +1,4 @@
-// growlog.ai PWA MVP Interface with Vercel Auth support
+// GrowlogApp.tsx
 
 'use client';
 
