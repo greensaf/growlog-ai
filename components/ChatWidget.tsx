@@ -1,11 +1,11 @@
 'use client';
 
+import { useState, useRef, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Menu, ListTodo } from 'lucide-react';
-import { useState, useRef, useEffect } from 'react';
 import { ChatInput } from '@/components/ChatInput';
 import { ChatMessage } from '@/components/ChatMessage';
 import { ThemeToggle } from '@/components/ThemeToggle';
@@ -16,7 +16,6 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from '@/components/ui/dropdown-menu';
-
 
 export function ChatWidget() {
   const [messages, setMessages] = useState([
@@ -64,10 +63,11 @@ export function ChatWidget() {
   return (
     <div className='w-screen h-screen bg-background text-foreground pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]'>
       <Card className='w-full h-full flex flex-col overflow-hidden border-0 shadow-none rounded-none bg-background text-foreground'>
-        {/* Header */}
-        <div className='sticky top-0 z-50 px-4 sm:px-6 md:px-8 lg:px-12 py-4 flex items-center gap-3 shrink-0'>
+        {/* Sticky header */}
+        <div className='sticky top-0 z-50 px-4 sm:px-6 md:px-8 lg:px-12 py-4 flex items-center gap-3 bg-background border-b shadow-sm'>
           <Avatar>
             <AvatarImage src='/images/ava.jpg' />
+            <AvatarFallback>AI</AvatarFallback>
           </Avatar>
           <div className='flex flex-col'>
             <span className='font-medium text-base sm:text-lg md:text-xl'>
@@ -77,7 +77,6 @@ export function ChatWidget() {
               journal with neuro
             </span>
           </div>
-
           <div className='ml-auto flex items-center gap-0.5'>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -117,25 +116,23 @@ export function ChatWidget() {
           </div>
         </div>
 
-        {/* Scrollable messages */}
-        <div className='flex-1 relative overflow-hidden'>
-          <div
-            ref={scrollRef}
-            className='absolute inset-0 overflow-y-auto px-4 sm:px-6 md:px-8 lg:px-12 py-4 sm:py-6 md:py-8 pb-[104px]' // extra bottom padding for input
-          >
-            <div className='flex flex-col gap-6'>
-              {messages.map((msg, index) => (
-                <ChatMessage
-                  key={index}
-                  from={msg.from as 'user' | 'agent'}
-                  text={msg.text}
-                />
-              ))}
-            </div>
+        {/* Chat scroll area */}
+        <div
+          ref={scrollRef}
+          className='flex-1 overflow-y-auto px-4 sm:px-6 md:px-8 lg:px-12 py-4 sm:py-6 md:py-8 pb-[104px]'
+        >
+          <div className='flex flex-col gap-6'>
+            {messages.map((msg, index) => (
+              <ChatMessage
+                key={index}
+                from={msg.from as 'user' | 'agent'}
+                text={msg.text}
+              />
+            ))}
           </div>
         </div>
 
-        {/* Input fixed at bottom */}
+        {/* Bottom input area */}
         <div className='shrink-0'>
           <ChatInput
             isRecording={isRecording}
