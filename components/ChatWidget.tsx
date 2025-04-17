@@ -65,7 +65,7 @@ export function ChatWidget() {
     <div className='w-screen h-screen bg-background text-foreground pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]'>
       <Card className='w-full h-full flex flex-col overflow-hidden border-0 shadow-none rounded-none bg-background text-foreground'>
         {/* Header */}
-        <div className='px-4 sm:px-6 md:px-8 lg:px-12 py-4 flex items-center gap-2 shrink-0'>
+        <div className='px-4 sm:px-6 md:px-8 lg:px-12 py-4 flex items-center gap-3 shrink-0'>
           <Avatar>
             <AvatarImage src='/images/ava.jpg' />
             <AvatarFallback></AvatarFallback>
@@ -79,7 +79,7 @@ export function ChatWidget() {
             </span>
           </div>
 
-          <div className='ml-auto flex items-center gap-1'>
+          <div className='ml-auto flex items-center gap-0.5'>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant='ghost' size='icon' className='w-10 h-10'>
@@ -94,13 +94,13 @@ export function ChatWidget() {
                   ⑆ Web3
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => alert('Reports clicked')}>
-                  ⎘ Export
+                  ⎙ Export
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => alert('Settings')}>
                   ⚙︎ Options
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => alert('Log out')}>
-                  ⏏︎ Log out
+                  ⎋ Log out
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
