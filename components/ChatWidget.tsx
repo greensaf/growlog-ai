@@ -99,7 +99,9 @@ export function ChatWidget() {
                 <DropdownMenuItem onClick={() => alert('Settings')}>
                   ⚙︎ Options
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => alert('Log out')}>
+                <DropdownMenuItem
+                  onClick={() => (window.location.href = '/api/auth/logout')}
+                >
                   ⍅ Log out
                 </DropdownMenuItem>
               </DropdownMenuContent>
