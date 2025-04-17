@@ -72,14 +72,14 @@ export function ChatWidget() {
           </Avatar>
           <div className='flex flex-col'>
             <span className='font-medium text-base sm:text-lg md:text-xl'>
-              Growlog AI
+              Growlog
             </span>
             <span className='text-sm sm:text-base text-muted-foreground'>
               journal with neuro
             </span>
           </div>
 
-          <div className='ml-auto flex items-center gap-2'>
+          <div className='ml-auto flex items-center gap-1.5'>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant='ghost' size='icon' className='w-10 h-10'>
@@ -88,7 +88,7 @@ export function ChatWidget() {
               </DropdownMenuTrigger>
               <DropdownMenuContent align='center' className='w-48'>
                 <DropdownMenuItem onClick={() => alert('Profile clicked')}>
-                  ⚇ Profile
+                ⚇ Profile
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => alert('Web3 clicked')}>
                   ⑆ Web3
