@@ -54,7 +54,7 @@ export function ChatInput({
   return (
     <form
       onSubmit={handleSubmit}
-      className='flex items-end gap-2 px-4 py-3 w-full bg-background pb-[calc(env(safe-area-inset-bottom)+18px)]'
+      className='flex items-end gap-2 px-4 py-3 w-full bg-background pb-[calc(env(safe-area-inset-bottom)+26px)]'
     >
       <textarea
         ref={textareaRef}
