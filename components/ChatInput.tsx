@@ -36,21 +36,53 @@ export function ChatInput({
     }
   };
 
+  
   const handleMicClick = async () => {
     toggleRecording();
 
-    if ('vibrate' in navigator) {
-      navigator.vibrate([50, 30, 50]);
-    }
+    if ('vibrate' in navigator) navigator.vibrate([50, 30, 50]);
 
     if (!isRecording) {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const recorder = new MediaRecorder(stream);
+      const audioChunks: Blob[] = [];
+
+      recorder.ondataavailable = (event) => {
+        audioChunks.push(event.data);
+      };
+
+      recorder.onstop = async () => {
+        const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+
+        // отправляем на сервер
+        const formData = new FormData();
+        formData.append('audio', audioBlob, 'voice.webm');
+
+        try {
+          const res = await fetch('/api/whisper', {
+            method: 'POST',
+            body: formData,
+          });
+
+          const result = await res.json();
+          console.log('Ответ от whisper:', result);
+        } catch (error) {
+          console.error('Ошибка отправки аудио:', error);
+        }
+
+        stream.getTracks().forEach((track) => track.stop());
+      };
+
+      recorder.start();
+
       setTimeout(() => {
-        toggleRecording();
-        handleSend('Simulated voice input');
-      }, 2000);
+        recorder.stop();
+        toggleRecording(); // прекращаем анимацию
+      }, 3000); // 3 секунды записи
     }
   };
-  //      className='flex items-end gap-2 px-4 sm:px-6 md:px-8 lg:px-12 py-3 bg-background w-full'
+
+
 
   return (
     <form
