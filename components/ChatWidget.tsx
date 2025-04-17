@@ -65,10 +65,9 @@ export function ChatWidget() {
     <div className='w-screen h-screen bg-background text-foreground pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]'>
       <Card className='w-full h-full flex flex-col overflow-hidden border-0 shadow-none rounded-none bg-background text-foreground'>
         {/* Header */}
-        <div className='sticky top-0 z-50 px-4 sm:px-6 md:px-8 lg:px-12 py-4 flex items-center gap-3 shrink-0'>
+        <div className='fixed top-0 z-50 px-4 sm:px-6 md:px-8 lg:px-12 py-4 flex items-center gap-3 shrink-0'>
           <Avatar>
             <AvatarImage src='/images/ava.jpg' />
-            <AvatarFallback></AvatarFallback>
           </Avatar>
           <div className='flex flex-col'>
             <span className='font-medium text-base sm:text-lg md:text-xl'>
