@@ -88,7 +88,7 @@ export function ChatWidget() {
               </DropdownMenuTrigger>
               <DropdownMenuContent align='center' className='w-48'>
                 <DropdownMenuItem onClick={() => alert('Profile clicked')}>
-                  ⚘ Profile
+                  ⚇ Profile
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => alert('Web3 clicked')}>
                   ⑆ Web3
@@ -97,7 +97,7 @@ export function ChatWidget() {
                   ⏍ Reports
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => alert('Settings')}>
-                  ⌥ Options
+                  ⚙︎ Options
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => alert('Log out')}>
                   ⏏︎ Log out
