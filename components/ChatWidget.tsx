@@ -59,15 +59,15 @@ export function ChatWidget() {
         {/* Header */}
         <div className='px-4 sm:px-6 md:px-8 lg:px-12 py-4 flex items-center gap-3 shrink-0'>
           <Avatar>
-            <AvatarImage src='/avatar.png' />
-            <AvatarFallback>ai</AvatarFallback>
+            <AvatarImage src='/images/ava.png' />
+            <AvatarFallback></AvatarFallback>
           </Avatar>
           <div className='flex flex-col'>
             <span className='font-medium text-base sm:text-lg md:text-xl'>
               Growlog
             </span>
             <span className='text-sm sm:text-base text-muted-foreground'>
-              grow journal with neuro
+              journal with neuro
             </span>
           </div>
           <div className='ml-auto flex items-center gap-2'>
