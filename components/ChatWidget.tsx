@@ -62,9 +62,9 @@ export function ChatWidget() {
 
   return (
     <div className='w-screen h-screen bg-background text-foreground pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]'>
-      <Card className='w-full h-full flex flex-col overflow-hidden border-0 shadow-none rounded-none bg-background text-foreground'>
+      <Card className='w-full h-full flex-1 overflow-y-auto border-0 shadow-none rounded-none bg-background text-foreground'>
         {/* Sticky header */}
-        <div className='sticky top-0 z-50 px-4 sm:px-6 md:px-8 lg:px-12 py-4 flex items-center gap-3 bg-background border-b shadow-sm'>
+        <div className='sticky top-0 z-50 px-4 sm:px-6 md:px-8 lg:px-12 py-4 flex items-center gap-3 bg-background border-b'>
           <Avatar>
             <AvatarImage src='/images/ava.jpg' />
             <AvatarFallback>AI</AvatarFallback>
