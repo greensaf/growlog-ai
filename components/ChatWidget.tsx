@@ -4,7 +4,7 @@ import { Card } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Plus } from 'lucide-react';
+import { Menu } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
 import { ChatInput } from '@/components/ChatInput';
 import { ChatMessage } from '@/components/ChatMessage';
@@ -60,7 +60,7 @@ export function ChatWidget() {
         <div className='px-4 sm:px-6 md:px-8 lg:px-12 py-4 flex items-center gap-3 shrink-0'>
           <Avatar>
             <AvatarImage src='/avatar.png' />
-            <AvatarFallback>.ai</AvatarFallback>
+            <AvatarFallback>ai</AvatarFallback>
           </Avatar>
           <div className='flex flex-col'>
             <span className='font-medium text-base sm:text-lg md:text-xl'>
@@ -72,7 +72,7 @@ export function ChatWidget() {
           </div>
           <div className='ml-auto flex items-center gap-2'>
             <Button variant='ghost' size='icon' className='w-10 h-10'>
-              <Plus size={22} />
+              <Menu size={22} />
             </Button>
             <ThemeToggle />
           </div>
