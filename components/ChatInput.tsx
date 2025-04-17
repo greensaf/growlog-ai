@@ -49,11 +49,12 @@ export function ChatInput({
       }, 2000);
     }
   };
+  //      className='flex items-end gap-2 px-4 sm:px-6 md:px-8 lg:px-12 py-3 bg-background w-full'
 
   return (
     <form
       onSubmit={handleSubmit}
-      className='flex items-end gap-2 px-4 sm:px-6 md:px-8 lg:px-12 py-3 bg-background w-full'
+      className='flex items-end gap-2 px-4 py-3 w-full bg-background pb-[calc(env(safe-area-inset-bottom)+18px)]'
     >
       <textarea
         ref={textareaRef}
