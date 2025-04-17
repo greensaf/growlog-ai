@@ -4,7 +4,7 @@ import { Card } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Menu } from 'lucide-react';
+import { Menu, ListTodo } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
 import { ChatInput } from '@/components/ChatInput';
 import { ChatMessage } from '@/components/ChatMessage';
@@ -104,6 +104,14 @@ export function ChatWidget() {
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
+            <Button
+              variant='ghost'
+              size='icon'
+              className='w-10 h-10'
+              onClick={() => alert('List to do clicked')}
+            >
+              <ListTodo size={22} />
+            </Button>
             <ThemeToggle />
           </div>
         </div>
