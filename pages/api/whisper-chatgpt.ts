@@ -1,6 +1,6 @@
+// whisper.ts
 import type { NextApiRequest, NextApiResponse } from 'next';
 import formidable from 'formidable';
-import fs from 'fs';
 import { createReadStream } from 'fs';
 import { createClient } from '@supabase/supabase-js';
 

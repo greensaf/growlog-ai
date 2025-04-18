@@ -19,7 +19,6 @@ import { generateReactHelpers } from '@uploadthing/react/hooks';
 import type { OurFileRouter } from '@/lib/uploadthing';
 import Recorder from 'recorder-js';
 import type { GrowData } from '@/types/grow';
-import { createClient } from '@supabase/supabase-js';
 import { v4 as uuidv4 } from 'uuid';
 import { useTheme } from '@/lib/useTheme';
 
@@ -126,7 +125,7 @@ export default function GrowlogApp() {
         cycleId: json.data?.cycleId || cycleId,
         cycleName:
           json.data?.cycleName ||
-          collectedData?.cycleName ||
+          collectedData?.cycleName || 
           'Unnamed Grow Cycle',
       };
 
@@ -136,31 +135,12 @@ export default function GrowlogApp() {
           ? json.analysis
           : '✅ Всё идёт отлично! Записал данные.'
       );
-
-      const supabase = createClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-      );
-
-      const { error } = await supabase.from('grow_logs').insert([
-        {
-          user_id: user?.email || 'unknown',
-          session_id: sessionId,
-          cycle_id: newData.cycleId,
-          cycle_name: newData.cycleName,
-          timestamp: new Date().toISOString(),
-          data: newData,
-        },
-      ]);
-
-      if (error) {
-        console.error('Supabase insert error:', error);
-      }
-    } catch (err) {
-      console.error('Whisper error:', err);
-      setAiAnalysis('Ошибка при расшифровке аудио.');
+    } catch (error) {
+      console.error('Error uploading audio:', error);
+      alert('Failed to upload audio. Please try again.');
     }
-  };
+
+    
 
   const toggleRecording = () => {
     setRecording((prev) => !prev);
@@ -247,4 +227,5 @@ export default function GrowlogApp() {
       </div>
     </div>
   );
-}
+}} // end of GrowlogApp
+
