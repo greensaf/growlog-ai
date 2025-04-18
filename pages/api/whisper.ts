@@ -34,12 +34,16 @@ export default async function handler(
       return res.status(500).json({ message: 'Ошибка загрузки' });
     }
 
-    const file = files.audio?.[0] || files.audio;
+    const file = Array.isArray(files.audio) ? files.audio[0] : files.audio;
+    const filePath = (file as any).filepath || (file as any).path;
+    const fileStream = createReadStream(filePath);
+
+
+
     const language = fields.language?.[0] || 'en'; // получаем язык с клиента
 
     if (!file) return res.status(400).json({ message: 'Нет файла audio' });
 
-    const fileStream = createReadStream(file.filepath || file.path);
 
     // --- Step 1: Whisper ---
     const formData = new FormData();
