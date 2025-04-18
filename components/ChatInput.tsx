@@ -5,6 +5,8 @@ import { useState, useRef, useEffect } from 'react';
 import { VoiceButton } from '@/components/VoiceButton';
 import { SendHorizonal } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useUser } from '@auth0/nextjs-auth0/client';
+
 
 interface ChatInputProps {
   isRecording: boolean;
@@ -36,6 +38,10 @@ export function ChatInput({
     }
   };
 
+  const sessionId = useRef(`session-${Date.now()}`);
+  const { user } = useUser();
+
+
   
   const handleMicClick = async () => {
     toggleRecording();
@@ -51,27 +57,40 @@ export function ChatInput({
         audioChunks.push(event.data);
       };
 
-      recorder.onstop = async () => {
-        const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+  recorder.onstop = async () => {
+    const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
 
-        // отправляем на сервер
-        const formData = new FormData();
-        formData.append('audio', audioBlob, 'voice.webm');
+    const formData = new FormData();
+    formData.append('audio', audioBlob, 'voice.webm');
 
-        try {
-          const res = await fetch('/api/whisper', {
-            method: 'POST',
-            body: formData,
-          });
+    // Язык пользователя
+    const userLang = navigator.language.split('-')[0] || 'en';
+    formData.append('language', userLang);
 
-          const result = await res.json();
-          console.log('Ответ от whisper:', result);
-        } catch (error) {
-          console.error('Ошибка отправки аудио:', error);
-        }
+    // Email пользователя (если есть)
+    if (user?.email) {
+      formData.append('user', user.email);
+    }
 
-        stream.getTracks().forEach((track) => track.stop());
-      };
+    // ID сессии
+    formData.append('sessionId', sessionId.current);
+
+    try {
+      const res = await fetch('/api/whisper', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const result = await res.json();
+      console.log('Ответ от whisper:', result);
+    } catch (error) {
+      console.error('Ошибка отправки аудио:', error);
+    }
+
+    stream.getTracks().forEach((track) => track.stop());
+  };
+
+
 
       recorder.start();
 
