@@ -76,7 +76,7 @@ export function ChatInput({
     formData.append('sessionId', sessionId.current);
 
     try {
-      const res = await fetch('/api/whisper', {
+      const res = await fetch('/api/whisper-chatgpt', {
         method: 'POST',
         body: formData,
       });

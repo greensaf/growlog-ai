@@ -105,40 +105,26 @@ export default function GrowlogApp() {
     }
   }, [recording, user]);
 
+  
   const uploadAudio = async (audioBlob: Blob) => {
-    const formData = new FormData();
-    formData.append('audio', audioBlob);
-    formData.append('user', user?.email || '');
-    formData.append('sessionId', sessionId);
-    formData.append('cycleId', cycleId);
+  const formData = new FormData();
+  formData.append('audio', audioBlob);
+  formData.append('user', user?.email || '');
+  formData.append('sessionId', sessionId);
+  formData.append('cycleId', cycleId);
 
-    try {
-      const res = await fetch('/api/whisper-chatgpt', {
-        method: 'POST',
-        body: formData,
-      });
-      const json = await res.json();
+  try {
+    const res  = await fetch('/api/whisper-chatgpt', { method: 'POST', body: formData });
+    const json = await res.json();
 
-      const newData = {
-        ...collectedData,
-        ...json.data,
-        cycleId: json.data?.cycleId || cycleId,
-        cycleName:
-          json.data?.cycleName ||
-          collectedData?.cycleName || 
-          'Unnamed Grow Cycle',
-      };
-
-      setCollectedData(newData);
-      setAiAnalysis(
-        typeof json.analysis === 'string'
-          ? json.analysis
-          : '✅ Всё идёт отлично! Записал данные.'
-      );
-    } catch (error) {
-      console.error('Error uploading audio:', error);
-      alert('Failed to upload audio. Please try again.');
-    }
+    // json.data — это строка, которая уже сохранена в grow_logs
+    setCollectedData(json.data);
+    setAiAnalysis(json.text || '✅ Всё записал!');
+  } catch (error) {
+    console.error('Error uploading audio:', error);
+    alert('Failed to upload audio. Please try again.');
+  }
+};
 
     
 
