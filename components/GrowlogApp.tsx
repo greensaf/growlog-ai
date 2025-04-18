@@ -1,5 +1,4 @@
-// GrowlogApp.tsx
-
+// components/GrowlogApp.tsx
 'use client';
 
 import { useUser } from '@auth0/nextjs-auth0/client';
@@ -28,60 +27,94 @@ const isIOS =
 const { useUploadThing } = generateReactHelpers<OurFileRouter>();
 
 export default function GrowlogApp() {
+  /* ---------------- state / refs ---------------- */
   const { user, isLoading } = useUser();
+  const { theme, toggleTheme } = useTheme();
+
   const [recording, setRecording] = useState(false);
   const [collectedData, setCollectedData] = useState<GrowData | null>(null);
   const [aiAnalysis, setAiAnalysis] = useState<string | null>(null);
   const [popoverOpen, setPopoverOpen] = useState(false);
   const [inputText, setInputText] = useState('');
+
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const recorderJsRef = useRef<any>(null);
   const audioChunksRef = useRef<Blob[]>([]);
   const streamRef = useRef<MediaStream | null>(null);
-  const { theme, toggleTheme } = useTheme();
 
   const sessionId = uuidv4();
   const cycleId = 'grow-' + (user?.email?.split('@')[0] || 'default');
 
+  /* ---------------- helpers ---------------- */
+  const getStream = async (): Promise<MediaStream | null> => {
+    if (streamRef.current) {
+      // повторное использование без запроса разрешения
+      streamRef.current.getAudioTracks().forEach((t) => (t.enabled = true));
+      return streamRef.current;
+    }
+    try {
+      const s = await navigator.mediaDevices.getUserMedia({ audio: true });
+      streamRef.current = s;
+      return s;
+    } catch (e) {
+      console.error('getUserMedia error:', e);
+      alert('Не удалось получить доступ к микрофону.');
+      return null;
+    }
+  };
+
+  const uploadAudio = async (audioBlob: Blob) => {
+    const formData = new FormData();
+    formData.append('audio', audioBlob);
+    formData.append('user', user?.email || '');
+    formData.append('sessionId', sessionId);
+    formData.append('cycleId', cycleId);
+
+    try {
+      const res = await fetch('/api/whisper-chatgpt', {
+        method: 'POST',
+        body: formData,
+      });
+      const json = await res.json();
+
+      setCollectedData(json.data); // строка из grow_logs
+      setAiAnalysis(json.text || '✅ Всё записал!');
+    } catch (error) {
+      console.error('Error uploading audio:', error);
+      alert('Failed to upload audio. Please try again.');
+    }
+  };
+
+  /* ---------------- recording logic ---------------- */
   useEffect(() => {
     if (!user) return;
 
     const startRecording = async () => {
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia({
-          audio: true,
-        });
-        streamRef.current = stream;
+      const stream = await getStream();
+      if (!stream) return;
 
-        if (isIOS || typeof MediaRecorder === 'undefined') {
-          const audioContext = new AudioContext();
-          const recorder = new Recorder(audioContext);
-          await recorder.init(stream);
-          recorderJsRef.current = recorder;
-          recorder.start();
-        } else {
-          const recorder = new MediaRecorder(stream);
-          mediaRecorderRef.current = recorder;
-          audioChunksRef.current = [];
+      if (isIOS || typeof MediaRecorder === 'undefined') {
+        const audioContext = new AudioContext();
+        const recorder = new Recorder(audioContext);
+        await recorder.init(stream);
+        recorderJsRef.current = recorder;
+        recorder.start();
+      } else {
+        const recorder = new MediaRecorder(stream);
+        mediaRecorderRef.current = recorder;
+        audioChunksRef.current = [];
 
-          recorder.ondataavailable = (event) => {
-            audioChunksRef.current.push(event.data);
-          };
+        recorder.ondataavailable = (e) => audioChunksRef.current.push(e.data);
+        recorder.onstop = async () => {
+          const blob = new Blob(audioChunksRef.current, {
+            type: 'audio/webm',
+          });
+          await uploadAudio(blob);
+          // поток НЕ останавливаем, просто отключаем звук
+          stream.getAudioTracks().forEach((t) => (t.enabled = false));
+        };
 
-          recorder.onstop = async () => {
-            const audioBlob = new Blob(audioChunksRef.current, {
-              type: 'audio/webm',
-            });
-            await uploadAudio(audioBlob);
-            stream.getTracks().forEach((t) => t.stop());
-          };
-
-          recorder.start();
-        }
-      } catch (err) {
-        console.error('Microphone error:', err);
-        alert('Не удалось получить доступ к микрофону.');
-        setRecording(false);
+        recorder.start();
       }
     };
 
@@ -92,69 +125,53 @@ export default function GrowlogApp() {
           const { blob } = await recorder.stop();
           await uploadAudio(blob);
         }
-        streamRef.current?.getTracks().forEach((t) => t.stop());
+        streamRef.current?.getAudioTracks().forEach((t) => (t.enabled = false));
       } else {
         mediaRecorderRef.current?.stop();
       }
     };
 
-    if (recording) {
-      startRecording();
-    } else {
-      stopRecording();
-    }
+    recording ? startRecording() : stopRecording();
   }, [recording, user]);
 
-  
-  const uploadAudio = async (audioBlob: Blob) => {
-  const formData = new FormData();
-  formData.append('audio', audioBlob);
-  formData.append('user', user?.email || '');
-  formData.append('sessionId', sessionId);
-  formData.append('cycleId', cycleId);
+  // Очищаем поток при размонтировании
+  useEffect(() => {
+    return () => {
+      streamRef.current?.getTracks().forEach((t) => t.stop());
+    };
+  }, []);
 
-  try {
-    const res  = await fetch('/api/whisper-chatgpt', { method: 'POST', body: formData });
-    const json = await res.json();
+  const toggleRecording = () => setRecording((p) => !p);
 
-    // json.data — это строка, которая уже сохранена в grow_logs
-    setCollectedData(json.data);
-    setAiAnalysis(json.text || '✅ Всё записал!');
-  } catch (error) {
-    console.error('Error uploading audio:', error);
-    alert('Failed to upload audio. Please try again.');
-  }
-};
-
-    
-
-  const toggleRecording = () => {
-    setRecording((prev) => !prev);
-  };
-
+  /* ---------------- UI ---------------- */
   if (isLoading) return <div className='text-center mt-10'>Загрузка...</div>;
   if (!user) return null;
 
   return (
-    <div className='max-w-[375px] h-[812px] mx-auto bg-background text-foreground flex flex-col justify-between p-2 relative transition-colors duration-700 ease-in-out rounded-xl shadow-xl border border-border'>
+    <div className='max-w-[375px] h-[812px] mx-auto bg-background text-foreground flex flex-col justify-between p-2 relative transition-colors duration-700 ease-in-out rounded-xl shadow-xl border'>
+      {/* logout */}
       <div className='absolute top-2 right-2'>
         <Button
           variant='ghost'
           size='icon'
-          className='w-13 h-13 scale-[0.8]'
-          onClick={() => (window.location.href = '/api/auth/logout')}
+          className='scale-90'
+          onClick={() => {
+            streamRef.current?.getTracks().forEach((t) => t.stop());
+            window.location.href = '/api/auth/logout';
+          }}
         >
-          <LogOut size={22} />
+          <LogOut size={20} />
         </Button>
       </div>
 
+      {/* JSON popover */}
       <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
         <PopoverTrigger>
           <div className='w-16 h-16 bg-secondary rounded-full mx-auto mb-1 shadow flex items-center justify-center text-lg font-bold'>
             📋
           </div>
         </PopoverTrigger>
-        <PopoverContent className='max-h-80 overflow-auto bg-background border border-border transition-colors duration-700 ease-in-out'>
+        <PopoverContent className='max-h-80 overflow-auto bg-background border'>
           <pre className='text-xs whitespace-pre-wrap'>
             {collectedData
               ? JSON.stringify(collectedData, null, 2)
@@ -163,25 +180,28 @@ export default function GrowlogApp() {
         </PopoverContent>
       </Popover>
 
+      {/* AI analysis */}
       {aiAnalysis && (
-        <Alert className='mb-2 border border-border transition-colors duration-700 ease-in-out'>
+        <Alert className='mb-2 border'>
           <AlertTitle>Grow Tip of the Day</AlertTitle>
           <AlertDescription>{aiAnalysis}</AlertDescription>
         </Alert>
       )}
 
+      {/* input + menu */}
       <div className='flex items-center gap-2'>
         <Input
           value={inputText}
           onChange={(e) => setInputText(e.target.value)}
-          placeholder='Optional text input...'
-          className='text-sm flex-1 border border-border transition-colors duration-700 ease-in-out'
+          placeholder='Optional text input…'
+          className='flex-1 text-sm'
         />
         <Button variant='outline' size='icon'>
           <Menu size={18} />
         </Button>
       </div>
 
+      {/* footer: upload / REC / theme */}
       <div className='flex justify-between items-center mt-3'>
         <UploadDropzone<OurFileRouter>
           endpoint='imageUploader'
@@ -194,9 +214,9 @@ export default function GrowlogApp() {
               );
             }
           }}
-          onUploadError={(error: Error) => {
-            console.error('Upload error:', error);
-            alert('Upload failed. Please try again.');
+          onUploadError={(e) => {
+            console.error('Upload error:', e);
+            alert('Upload failed.');
           }}
         />
 
@@ -213,5 +233,4 @@ export default function GrowlogApp() {
       </div>
     </div>
   );
-}} // end of GrowlogApp
-
+}
