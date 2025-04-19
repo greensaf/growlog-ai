@@ -8,6 +8,14 @@ const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 );
 
+if (!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+  console.error('⛔️ NEXT_PUBLIC_SUPABASE_ANON_KEY is undefined at runtime');
+}
+if (!process.env.NEXT_PUBLIC_SUPABASE_URL) {
+  console.error('⛔️ NEXT_PUBLIC_SUPABASE_URL is undefined at runtime');
+}
+
+
 export const config = { api: { bodyParser: false } };
 
 export default async function handler(
