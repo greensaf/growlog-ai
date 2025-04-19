@@ -5,10 +5,11 @@ import { createClient, PostgrestError } from '@supabase/supabase-js';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  process.env.SUPABASE_SERVICE_ROLE_KEY! // ← добавь в переменные окружения
 );
 
-if (!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+
+if (!process.env.SUPABASE_SERVICE_ROLE_KEY!) {
   console.error('⛔️ NEXT_PUBLIC_SUPABASE_ANON_KEY is undefined at runtime');
 }
 if (!process.env.NEXT_PUBLIC_SUPABASE_URL) {
