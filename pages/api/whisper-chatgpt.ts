@@ -9,8 +9,8 @@ const supabase = createClient(
 );
 
 
-if (!process.env.SUPABASE_SERVICE_ROLE_KEY!) {
-  console.error('⛔️ NEXT_PUBLIC_SUPABASE_ANON_KEY is undefined at runtime');
+if (!process.env.SUPABASE_SERVICE_ROLE_KEY) {
+console.error('⛔️ SUPABASE_SERVICE_ROLE_KEY is undefined');
 }
 if (!process.env.NEXT_PUBLIC_SUPABASE_URL) {
   console.error('⛔️ NEXT_PUBLIC_SUPABASE_URL is undefined at runtime');
