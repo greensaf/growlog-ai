@@ -2,10 +2,11 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import formidable from 'formidable';
 import { createReadStream } from 'fs';
 import { createClient, PostgrestError } from '@supabase/supabase-js';
+import FormData from 'form-data';  
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY! // ← добавь в переменные окружения
+  process.env.SUPABASE_SERVICE_ROLE_KEY! 
 );
 
 
@@ -43,10 +44,27 @@ export default async function handler(
     const language = fields.language?.[0] || 'en';
 
     /* ---------- Whisper ----------- */
-    const fd = new FormData();
-    fd.append('file', fileStream as any, 'voice.webm');
-    fd.append('model', 'whisper-1');
-    fd.append('language', language);
+ const fd = new FormData();
+ fd.append('file', fileStream, {
+   // 👈 ReadStream разрешён
+   filename: 'voice.webm',
+   contentType: 'audio/webm',
+ });
+ fd.append('model', 'whisper-1');
+ fd.append('language', language);
+
+ const whisperRes = await fetch(
+   'https://api.openai.com/v1/audio/transcriptions',
+   {
+     method: 'POST',
+     headers: {
+       Authorization: `Bearer ${process.env.OPENAI_API_KEY!}`,
+       ...fd.getHeaders(), // важно: boundary
+     },
+     body: fd as unknown as BodyInit,
+   }
+ );
+
 
     const whisperJson = await fetch(
       'https://api.openai.com/v1/audio/transcriptions',
