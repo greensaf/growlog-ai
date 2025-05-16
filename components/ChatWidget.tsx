@@ -2,6 +2,7 @@
 
 'use client';
 
+<<<<<<< Updated upstream
 import { useState, useRef, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -18,6 +19,17 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from '@/components/ui/dropdown-menu';
+=======
+import { Card } from "@/components/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Menu } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
+import { ChatInput } from "@/components/ChatInput";
+import { ChatMessage } from "@/components/ChatMessage";
+import { ThemeToggle } from "@/components/ThemeToggle";
+>>>>>>> Stashed changes
 
 export function ChatWidget() {
   const [messages, setMessages] = useState([
@@ -79,6 +91,7 @@ export function ChatWidget() {
               journal with neuro
             </span>
           </div>
+<<<<<<< Updated upstream
           <div className='ml-auto flex items-center gap-0.5'>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -113,11 +126,17 @@ export function ChatWidget() {
               onClick={() => alert('List to do clicked')}
             >
               <ListTodo size={22} />
+=======
+          <div className="ml-auto flex items-center gap-2">
+            <Button variant="ghost" size="icon" className="w-10 h-10">
+              <Menu size={22} />
+>>>>>>> Stashed changes
             </Button>
             <ThemeToggle />
           </div>
         </div>
 
+<<<<<<< Updated upstream
         {/* Chat scroll area */}
         <div
           ref={scrollRef}
@@ -133,6 +152,19 @@ export function ChatWidget() {
             ))}
           </div>
         </div>
+=======
+        <div className="flex flex-col flex-1 overflow-hidden min-h-0">
+          <ScrollArea
+            ref={scrollRef}
+            className="px-4 sm:px-6 md:px-8 lg:px-12 py-4 sm:py-6 md:py-8 flex-1 overflow-y-auto min-h-0"
+          >
+            <div className="flex flex-col gap-6">
+              {messages.map((msg, index) => (
+                <ChatMessage key={index} from={msg.from as "user" | "agent"} text={msg.text} />
+              ))}
+            </div>
+          </ScrollArea>
+>>>>>>> Stashed changes
 
         {/* Bottom input area */}
         <div className='shrink-0'>

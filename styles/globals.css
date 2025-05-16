@@ -125,7 +125,7 @@ html.dark {
   animation: ping 1s ease-in-out infinite;
 }
 
-@keyframes slowpulse {
+.keyframes slowping {
   0%, 100% {
     opacity: 1;
   }
@@ -134,6 +134,6 @@ html.dark {
   }
 }
 
-.animate-slowpulse {
-  animation: slowpulse 2.5s ease-in-out infinite;
+.animate-slowping {
+  animation: slowping 2.4s cubic-bezier(0, 0, 0.2, 1) infinite;
 }
